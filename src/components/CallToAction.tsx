@@ -1,58 +1,111 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { ArrowRight, Gift, Star } from 'lucide-react'
+import { Check } from 'lucide-react'
 
-const CallToAction = () => {
+const CallToAction: React.FC = () => {
+  const plans = [
+    {
+      name: "Monthly",
+      price: "$19.99",
+      period: "per month",
+      features: [
+        "2-3 carefully selected books",
+        "Age-appropriate content",
+        "Free shipping",
+        "Reading guide included",
+        "Cancel anytime"
+      ]
+    },
+    {
+      name: "3-Month Gift",
+      price: "$54.99",
+      period: "one time",
+      popular: true,
+      features: [
+        "6-9 books total",
+        "Perfect baby shower gift",
+        "Beautiful gift packaging",
+        "Personal message card",
+        "Free shipping"
+      ]
+    },
+    {
+      name: "6-Month Gift",
+      price: "$99.99",
+      period: "one time",
+      features: [
+        "12-18 books total",
+        "Complete starter library",
+        "Premium gift box",
+        "Milestone tracking cards",
+        "Free shipping"
+      ]
+    }
+  ]
+
   return (
-    <section className="section-padding bg-gradient-to-br from-primary-dark to-primary text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 font-sonder">
-            Start your reading journey today
+    <section className="py-24 bg-neutral-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-light text-neutral-900 mb-6">
+            Choose Your Plan
           </h2>
-          <p className="text-xl mb-8 opacity-90 font-rebeqa">
-            Give your baby the foundation for lifelong learning with our expertly curated book collection
+          <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-light">
+            Start building your baby's library today with our flexible subscription options
           </p>
+        </div>
 
-          <div className="flex items-center justify-center space-x-2 mb-8">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-6 w-6 text-secondary fill-current" />
-            ))}
-            <span className="text-lg font-semibold ml-4 font-rebeqa">Loved by 10,000+ families</span>
-          </div>
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {plans.map((plan, index) => (
+            <div key={index} className={`relative bg-white border-2 p-8 ${plan.popular ? 'border-accent' : 'border-neutral-200'}`}>
+              {plan.popular && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-primary text-neutral-900 px-4 py-1 text-xs font-medium uppercase tracking-wider">
+                    Most Popular
+                  </span>
+                </div>
+              )}
+              
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-light text-neutral-900 mb-4">
+                  {plan.name}
+                </h3>
+                <div className="mb-6">
+                  <span className="text-4xl font-light text-neutral-900">{plan.price}</span>
+                  <span className="text-neutral-600 ml-2 text-sm">{plan.period}</span>
+                </div>
+              </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link 
-              to="/subscription"
-              className="bg-secondary hover:bg-secondary/90 text-primary-dark px-8 py-4 rounded-lg font-semibold inline-flex items-center justify-center transition-colors font-rebeqa"
-            >
-              Start Monthly Subscription
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            
-            <Link 
-              to="/subscription"
-              className="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-semibold inline-flex items-center justify-center transition-colors font-rebeqa"
-            >
-              <Gift className="mr-2 h-5 w-5" />
-              Give as Gift
-            </Link>
-          </div>
+              <ul className="space-y-4 mb-8">
+                {plan.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-start space-x-3">
+                    <div className={`w-4 h-4 mt-1 flex-shrink-0 flex items-center justify-center ${
+                      plan.popular ? 'bg-accent' : 'bg-primary'
+                    }`}>
+                      <Check className="h-3 w-3 text-neutral-900" />
+                    </div>
+                    <span className="text-neutral-700 text-sm font-light">{feature}</span>
+                  </li>
+                ))}
+              </ul>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold mb-2 text-secondary font-rebeqa">3-4</div>
-              <div className="text-white/80 font-rebeqa">Books per box</div>
+              <button className={`w-full py-4 font-medium transition-colors ${
+                plan.popular 
+                  ? 'bg-teal text-white hover:opacity-90' 
+                  : 'border-2 border-neutral-300 text-neutral-900 hover:border-primary hover:bg-primary'
+              }`}>
+                {plan.name.includes('Gift') ? 'Give as Gift' : 'Start Subscription'}
+              </button>
             </div>
-            <div>
-              <div className="text-3xl font-bold mb-2 text-secondary font-rebeqa">$19.99</div>
-              <div className="text-white/80 font-rebeqa">Per month</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold mb-2 text-secondary font-rebeqa">Free</div>
-              <div className="text-white/80 font-rebeqa">Shipping</div>
-            </div>
-          </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-16">
+          <p className="text-neutral-600 mb-4 font-light">
+            Questions? We're here to help!
+          </p>
+          <button className="text-neutral-900 font-medium hover:text-neutral-600 transition-colors border-b-2 border-accent hover:border-primary">
+            Contact Support
+          </button>
         </div>
       </div>
     </section>
